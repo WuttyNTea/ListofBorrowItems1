@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบยืม-คืนพัสดุ 2569</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>ระบบยืม-คืนพัสดุ 2569</h1>
+        
+        <div class="dashboard-summary">
+            <div class="summary-card total">
+                <h3>พัสดุทั้งหมด</h3>
+                <p id="count-total">0</p>
+            </div>
+            <div class="summary-card available">
+                <h3>สถานะว่าง (พร้อมยืม)</h3>
+                <p id="count-available">0</p>
+            </div>
+            <div class="summary-card borrowed">
+                <h3>ถูกยืมไปแล้ว</h3>
+                <p id="count-borrowed">0</p>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="ค้นหาด้วยรหัส หรือชื่อพัสดุ..." onkeyup="filterTable()">
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>รหัสพัสดุ</th>
+                    <th>รายการพัสดุ</th>
+                    <th>สถานะปัจจุบัน</th>
+                    <th>การจัดการ</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-list">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="borrow-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('borrow-modal')">&times;</span>
+            <h2>ทำรายการยืมพัสดุ</h2>
+            <form id="borrow-form">
+                <input type="hidden" id="borrow-item-id">
+                
+                <div class="form-group">
+                    <label>รหัสพัสดุ:</label>
+                    <input type="text" id="borrow-item-code" readonly>
+                </div>
+                <div class="form-group">
+                    <label>รายการพัสดุ:</label>
+                    <input type="text" id="borrow-item-name" readonly>
+                </div>
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุล ผู้ยืม:</label>
+                    <input type="text" id="borrower-name" required>
+                </div>
+                <div class="form-group">
+                    <label>วันที่ยืม:</label>
+                    <input type="date" id="borrow-date" required>
+                </div>
+                <div class="form-group">
+                    <label>เวลายืม:</label>
+                    <input type="time" id="borrow-time" required>
+                </div>
+                <button type="submit" class="btn btn-primary">ยืนยันการยืม</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('info-modal')">&times;</span>
+            <h2>ข้อมูลผู้ยืม</h2>
+            <input type="hidden" id="info-item-id">
+            
+            <div class="info-group">
+                <strong>พัสดุ:</strong> <span id="info-item-desc"></span>
+            </div>
+            <div class="info-group">
+                <strong>ผู้ยืม:</strong> <span id="info-borrower-name"></span>
+            </div>
+            <div class="info-group">
+                <strong>วันและเวลาที่ยืม:</strong> <span id="info-datetime"></span>
+            </div>
+            
+            <button onclick="returnItem()" class="btn btn-success" style="margin-top: 15px;">รับคืนพัสดุ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
